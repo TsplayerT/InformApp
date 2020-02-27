@@ -1,0 +1,139 @@
+﻿<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="InformApp.Controle.Pagina.HistoricoAvaliativo">
+
+    <NavigationPage.TitleView>
+        <Label
+            Text="Histórico"
+            TextColor="White"
+            FontSize="22"
+            FontAttributes="Bold"
+            HorizontalOptions="CenterAndExpand"/>
+    </NavigationPage.TitleView>
+
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout
+                Margin="10, 10, 10, 10"
+                Orientation="Vertical"
+                HorizontalOptions="FillAndExpand"
+                VerticalOptions="FillAndExpand">
+
+                <StackLayout
+                    Orientation="Horizontal"
+                    IsVisible="{Binding Carregando}"
+                    HorizontalOptions="CenterAndExpand">
+
+                    <ActivityIndicator
+                        IsRunning="{Binding Carregando}"
+                        Color="Gray"
+                        HeightRequest="20"
+                        WidthRequest="20"/>
+                    <Label
+                        Text="Carregando..."
+                        TextColor="Black"/>
+                </StackLayout>
+                <Label
+                    Text="Nenhum valor registrado."
+                    TextColor="Black"
+                    IsVisible="{Binding NenhumItem}"
+                    HorizontalOptions="CenterAndExpand"/>
+                <StackLayout
+                    BindableLayout.ItemsSource="{Binding ListaNotificacao}">
+
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate>
+                            <Frame
+                                CornerRadius="10"
+                                BackgroundColor="LightGray">
+
+                                <StackLayout
+                                    Orientation="Vertical">
+
+                                    <Label
+                                        BindingContext="{Binding .}">
+
+                                        <Label.FormattedText>
+                                            <FormattedString>
+                                                <Span 
+                                                    Text="Titulo: "
+                                                    ForegroundColor="Black"/>
+                                                <Span 
+                                                    Text="{Binding Titulo, FallbackValue='sem valor', TargetNullValue='sem valor'}"/>
+                                            </FormattedString>
+                                        </Label.FormattedText>
+                                    </Label>
+                                    <Label
+                                        BindingContext="{Binding .}">
+
+                                        <Label.FormattedText>
+                                            <FormattedString>
+                                                <Span 
+                                                    Text="Mensagem: "
+                                                    ForegroundColor="Black"/>
+                                                <Span 
+                                                    Text="{Binding Mensagem, FallbackValue='sem valor', TargetNullValue='sem valor'}"/>
+                                            </FormattedString>
+                                        </Label.FormattedText>
+                                    </Label>
+                                    <Label
+                                        BindingContext="{Binding .}">
+
+                                        <Label.FormattedText>
+                                            <FormattedString>
+                                                <Span 
+                                                    Text="DataAgendada: "
+                                                    ForegroundColor="Black"/>
+                                                <Span 
+                                                    Text="{Binding DataAgendada, FallbackValue='sem valor', TargetNullValue='sem valor'}"/>
+                                            </FormattedString>
+                                        </Label.FormattedText>
+                                    </Label>
+                                    <Label
+                                        IsVisible="{Binding RespostaVisivel}"
+                                        BindingContext="{Binding .}">
+
+                                        <Label.FormattedText>
+                                            <FormattedString>
+                                                <Span 
+                                                    Text="Resposta: "
+                                                    ForegroundColor="Black"/>
+                                                <Span 
+                                                    Text="{Binding RespostaTratada, FallbackValue='sem valor', TargetNullValue='sem valor'}"/>
+                                            </FormattedString>
+                                        </Label.FormattedText>
+                                    </Label>
+
+                                    <StackLayout
+                                        IsVisible="{Binding EscolherRespostaVisivel}"
+                                        Orientation="Horizontal"
+                                        BindingContext="{Binding .}"
+                                        HorizontalOptions="Center">
+
+                                        <Button
+                                            CornerRadius="10"
+                                            Text="✔"
+                                            FontSize="10"
+                                            BackgroundColor="#7d7dfa"
+                                            HorizontalOptions="Center"
+                                            Clicked="BotaoGostei_OnClicked"
+                                            BindingContext="{Binding .}"/>
+                                        <Button
+                                            CornerRadius="10"
+                                            Text="✖"
+                                            FontSize="10"
+                                            BackgroundColor="#fa4b4b"
+                                            HorizontalOptions="Center"
+                                            Clicked="BotaoNaoGostei_OnClicked"
+                                            BindingContext="{Binding .}"/>
+                                    </StackLayout>
+                                </StackLayout>
+                            </Frame>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </StackLayout>
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+
+</ContentPage>

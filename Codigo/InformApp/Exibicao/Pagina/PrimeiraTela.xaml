@@ -1,0 +1,94 @@
+﻿<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="InformApp.Controle.Pagina.PrimeiraTela">
+
+    <NavigationPage.TitleView>
+        <Label
+            Text="Tela de Configuração"
+            TextColor="White"
+            FontAttributes="Bold"
+            FontSize="22"
+            HorizontalOptions="CenterAndExpand"/>
+    </NavigationPage.TitleView>
+
+    <ContentPage.Content>
+        <StackLayout
+            Margin="10, 10, 10, 10"
+            Orientation="Vertical"
+            HorizontalOptions="FillAndExpand"
+            VerticalOptions="FillAndExpand">
+
+            <Label
+                Margin="0, 20, 0, 20"
+                Text="Antes de começar, precisamos configurar o App."
+                HorizontalOptions="CenterAndExpand"/>
+            <Frame
+                Margin="0, 20, 0, 0"
+                CornerRadius="10"
+                BackgroundColor="#f0f0f0">
+
+                <StackLayout
+                    Orientation="Vertical">
+
+                    <FlexLayout
+                        Direction="Column">
+
+                        <Label
+                            Text="Número de identificação:"
+                            TextColor="Black"
+                            VerticalTextAlignment="Center"/>
+                        <Entry
+                            Text="{Binding NumeroIdentificacao}"
+                            IsEnabled="{Binding NumeroIdentificacaoHabilitado}"
+                            Placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
+                            Keyboard="Text"/>
+                    </FlexLayout>
+                    <FlexLayout
+                        Direction="Column">
+
+                        <Label
+                            Text="Código de autenticação:"
+                            TextColor="Black"
+                            VerticalTextAlignment="Center"/>
+                        <Editor
+                            Text="{Binding CodigoAutenticacao}"
+                            IsEnabled="{Binding CodigoAutenticacaoHabilitado}"
+                            Placeholder="eyJpc3MiOiJ0b3B0YWwuY29tIiwiZXhwIjoxNDI2NDIwODAwLCJodHRwOi8vdG9wdGFsLmNvbS9qd3RfY2xhaW1zL2lzX2FkbWluIjp0cnVlLCJjb21wYW55IjoiVG9wdGFsIiwiYXdlc29tZSI6dHJ1ZX0"
+                            Keyboard="Text"
+                            HeightRequest="160"/>
+                    </FlexLayout>
+                    <StackLayout
+                        Orientation="Horizontal"
+                        HorizontalOptions="FillAndExpand">
+
+                        <Button
+                            CornerRadius="30"
+                            Text="Selecionar Arquivo"
+                            TextColor="Black"
+                            IsEnabled="{Binding BotaoSelecionarArquivoHabilitado}"
+                            BackgroundColor="{Binding BotaoSelecionarArquivoFundoAtual}"
+                            Clicked="BotaoSelecionarArquivo_OnClicked"/>
+                        <Button
+                            CornerRadius="30"
+                            Text="Verificar"
+                            TextColor="Black"
+                            IsEnabled="{Binding BotaoVerificarHabilitado}"
+                            BackgroundColor="{Binding BotaoVerificarFundoAtual}"
+                            HorizontalOptions="FillAndExpand"
+                            Clicked="BotaoVerificar_OnClicked"/>
+                    </StackLayout>
+                    <ActivityIndicator
+                        Margin="0, 10, 0, 0"
+                        IsVisible="{Binding Carregando}"
+                        IsRunning="{Binding Carregando}"
+                        Color="DarkGray"
+                        HeightRequest="20"
+                        WidthRequest="20"
+                        HorizontalOptions="CenterAndExpand"/>
+                </StackLayout>
+            </Frame>
+        </StackLayout>
+
+    </ContentPage.Content>
+
+</ContentPage>
