@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Reflection;
 using InformApp.Modelo;
+using InformApp.Servico;
 using InformApp.Utilidade;
 using Xamarin.Forms;
 
@@ -90,15 +90,15 @@ namespace InformApp.Controle.Pagina
                 {
                     var lista = await Principal.Repositorio.ListarAsync<Notificacao>();
 
-                    objeto.ListaNotificacao = new ObservableCollection<Notificacao>(lista?.OrderByDescending(x => x.DataAgendada).ToList() ?? new List<Notificacao>());
+                    objeto.ListaNotificacao = new ObservableCollection<Notificacao>(lista?.OrderBy(x => x.DataAgendada).ToList() ?? new List<Notificacao>());
 
                     objeto.Carregando = false;
                     objeto.NenhumItem = !objeto.ListaNotificacao.Any();
                 });
 
-                if (!Principal.AcoesNotificacaoRecebida.ContainsKey(Constantes.TipoAcao.AtualizarLista))
+                if (!Eventos.AcoesNotificacaoRecebida.ContainsKey(Constantes.TipoAcao.AtualizarLista))
                 {
-                    Principal.AcoesNotificacaoRecebida.Add(Constantes.TipoAcao.AtualizarLista, acao);
+                    Eventos.AcoesNotificacaoRecebida.Add(Constantes.TipoAcao.AtualizarLista, acao);
                 }
 
                 return acao;

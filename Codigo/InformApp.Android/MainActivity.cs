@@ -4,6 +4,7 @@ using Android.Runtime;
 using Android.OS;
 using Com.OneSignal;
 using InformApp.Controle;
+using InformApp.Servico;
 using InformApp.Utilidade;
 
 namespace InformApp.Droid
@@ -18,10 +19,11 @@ namespace InformApp.Droid
 
             base.OnCreate(savedInstanceState);
 
-            Xamarin.Essentials.Platform.Init(this, savedInstanceState);
-            Xamarin.Forms.Forms.Init(this, savedInstanceState);
-            OneSignal.Current.StartInit(Constantes.AppId).EndInit();
-            LoadApplication(new Principal());
+                Xamarin.Essentials.Platform.Init(this, savedInstanceState);
+                Xamarin.Forms.Forms.Init(this, savedInstanceState);
+                OneSignal.Current.StartInit(Constantes.AppId).HandleNotificationReceived(Eventos.NotificacaoRecebida).EndInit();
+
+                LoadApplication(new Principal());
         }
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Permission[] grantResults)
         {
