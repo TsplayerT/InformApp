@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Reflection;
+using System.Threading;
 using InformApp.Controle.Pagina;
 using Xamarin.Forms;
 
@@ -10,20 +12,12 @@ namespace InformApp.Utilidade
         public static string AppId => "065fc6dd-75b5-4b07-84e6-98ad139aec9b";
         public static ImageSource LogoImagemSource => ImageSource.FromResource("InformApp.Recurso.Imagem.logo.png", typeof(Constantes).GetTypeInfo().Assembly);
 
-        /*
-         
-        <Image
-            Margin="0, -27, 0, 0"
-            Scale="0.5"
-            Source="{x:Static utilidade:Constantes.LogoImagemSource}"/>
-
-         */
-
         public static Color CorDesabilitado => Color.FromHex("#afafaf");
 
         public enum TipoPagina
         {
             Nenhum,
+            TelaInicial,
             PrimeiraTela,
             HistoricoAvaliativo
         }
@@ -34,10 +28,11 @@ namespace InformApp.Utilidade
             AtualizarLista
         }
 
-        public static Dictionary<TipoPagina, Page> Paginas = new Dictionary<TipoPagina, Page>
+        public static Dictionary<TipoPagina, Page> Paginas => new Dictionary<TipoPagina, Page>
         {
-            { TipoPagina.PrimeiraTela, new PrimeiraTela() },
-            { TipoPagina.HistoricoAvaliativo, new HistoricoAvaliativo() },
+            { TipoPagina.TelaInicial, new Lazy<TelaInicial>(LazyThreadSafetyMode.ExecutionAndPublication).Value },
+            { TipoPagina.PrimeiraTela, new Lazy<PrimeiraTela>(LazyThreadSafetyMode.ExecutionAndPublication).Value },
+            { TipoPagina.HistoricoAvaliativo, new Lazy<HistoricoAvaliativo>(LazyThreadSafetyMode.ExecutionAndPublication).Value }
         };
     }
 }

@@ -1,0 +1,19 @@
+﻿<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:utilidade="clr-namespace:InformApp.Utilidade"
+             x:Class="InformApp.Controle.Pagina.TelaInicial"
+             NavigationPage.HasNavigationBar="False">
+
+    <ContentPage.Content>
+        <Frame
+            Scale="0.5"
+            CornerRadius="10"
+            BackgroundColor="#2096F3"
+            HorizontalOptions="CenterAndExpand"
+            VerticalOptions="CenterAndExpand">
+
+            <Image
+                Source="{x:Static utilidade:Constantes.LogoImagemSource}"/>
+        </Frame>
+    </ContentPage.Content>
+</ContentPage>

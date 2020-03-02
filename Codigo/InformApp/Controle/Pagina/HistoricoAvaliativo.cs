@@ -90,7 +90,7 @@ namespace InformApp.Controle.Pagina
                 {
                     var lista = await Principal.Repositorio.ListarAsync<Notificacao>();
 
-                    objeto.ListaNotificacao = new ObservableCollection<Notificacao>(lista?.OrderBy(x => x.DataAgendada).ToList() ?? new List<Notificacao>());
+                    objeto.ListaNotificacao = new ObservableCollection<Notificacao>(lista?.OrderByDescending(x => x.DataAgendada).ToList() ?? new List<Notificacao>());
 
                     objeto.Carregando = false;
                     objeto.NenhumItem = !objeto.ListaNotificacao.Any();

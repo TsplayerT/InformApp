@@ -8,28 +8,31 @@ using InformApp.Controle;
 using InformApp.Modelo;
 using InformApp.Utilidade;
 using SQLite;
+using Xamarin.Forms;
 
 namespace InformApp.Servico
 {
     public class Repositorio
     {
         private SQLiteAsyncConnection Conexao { get; }
-        public static string DiretorioBancoDados => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "InformApp.db");
+        public static string DiretorioBancoDados => Path.Combine(DependencyService.Get<IArquivamento>().PegarDiretorio(), "InformApp.db");
 
         public Repositorio()
         {
-            Conexao = new SQLiteAsyncConnection(DiretorioBancoDados);
-
-            Inicializar();
+            Conexao = new SQLiteAsyncConnection(DiretorioBancoDados, SQLiteOpenFlags.Create | SQLiteOpenFlags.ReadWrite | SQLiteOpenFlags.SharedCache | SQLiteOpenFlags.FullMutex);
         }
 
-        private async void Inicializar()
+        public async Task<Dictionary<Type, bool>> Inicializar()
         {
             Miscelanea.DefinirAtributosPai(typeof(_ModeloBase));
 
             var modelos = Miscelanea.PegarTodasClassesEmNamespace(typeof(_ModeloBase).Namespace).Where(x => x.Name != nameof(SQLiteConnection.ColumnInfo) && x.IsClass && !x.IsAbstract && Conexao.TableMappings.All(p => p.TableName.ToLower() != x.Name.ToLower())).ToArray();
 
-            await Conexao.CreateTablesAsync(CreateFlags.AutoIncPK, modelos).ConfigureAwait(false);
+            await Conexao.EnableLoadExtensionAsync(true).ConfigureAwait(false);
+            await Conexao.EnableWriteAheadLoggingAsync().ConfigureAwait(false);
+            var resultado = await Conexao.CreateTablesAsync(CreateFlags.AutoIncPK, modelos).ConfigureAwait(false);
+
+            return resultado.Results.ToDictionary(x => x.Key, x => x.Value == CreateTableResult.Created);
         }
 
         public async Task<T> PegarAsync<T>(Func<T, bool> funcao) where T : _ModeloBase, new()

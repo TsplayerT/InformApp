@@ -1,7 +1,10 @@
 ﻿using System;
+using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using InformApp.Modelo;
 using InformApp.Utilidade;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace InformApp.Controle.Pagina

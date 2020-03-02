@@ -11,6 +11,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Exibicao\Pagina\TelaInicial.xaml~RF199c629.TMP" />
     <None Remove="Recurso\Imagem\logo.png" />
   </ItemGroup>
 

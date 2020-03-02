@@ -19,14 +19,19 @@ namespace InformApp.Controle
 
             Device.BeginInvokeOnMainThread(async () =>
             {
-                MainPage = new ContentPage();
+                MainPage = Constantes.Paginas[Constantes.TipoPagina.TelaInicial];
+
+                DependencyService.Register<IArquivamento>();
+                OneSignal.Current.StartInit(Constantes.AppId).HandleNotificationReceived(Eventos.NotificacaoRecebida).EndInit();
+
                 Repositorio = new Repositorio();
+                await Repositorio.Inicializar();
+                await Task.Delay(100);
 
                 var configuracao = await Repositorio.PegarAsync<Configuracao>(x => x.Tipo == Configuracao.TipoConfiguracao.AppConfigurado && x.Valor == Configuracao.TipoValor.Booleano && x.ValorBruto != null);
                 var paginaInicial = configuracao != null && Convert.ToBoolean(configuracao.ValorBruto) ? Constantes.TipoPagina.HistoricoAvaliativo : Constantes.TipoPagina.PrimeiraTela;
-                
+
                 MainPage = Navegacao = new NavigationPage(Constantes.Paginas[paginaInicial]);
-                OneSignal.Current.StartInit(Constantes.AppId).HandleNotificationReceived(Eventos.NotificacaoRecebida).EndInit();
             });
         }
 
